@@ -27,18 +27,14 @@ def vprint(args, fmt):
 
 def main():
     parser = argparse.ArgumentParser(description="Download nightmare fuel in bulk!")
-    parser.add_argument("-o", "--output", type=str, help="Output directory")
-    parser.add_argument("-n", "--number", type=str, help="Number of faces to download")
+    parser.add_argument("-o", "--output", type=str, default=".", help="Output directory")
+    parser.add_argument("-n", "--number", type=int, default=5, help="Number of faces to download")
     parser.add_argument("-v", "--verbose", action="store_true", help="Be verbose")
     parser.add_argument("-i", "--ignore-error", action="store_true", help="Continue on error")
 
     args = parser.parse_args()
 
-    if args.output is None:
-        args.output = "."
-
-    if args.number is None:
-        args.number = 5
+    vprint(args, f" => Downloading {args.number} faces to \"{args.output}\"")
 
     # Try to create the output directory, if it doesn't already exist
     try:
