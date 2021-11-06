@@ -43,18 +43,15 @@ def main():
         print(f"Failed to mkdir {args.output}")
         exit(1)
 
-    vprint(args, " => Accumulating face URLs")
-    face_urls = [ get_face_url() for x in range(args.number) ]
-    vprint(args, "\n".join(face_urls))
-
-    vprint(args, " => Downloading faces")
-    for i, url in enumerate(face_urls):
-        vprint(args, f" => [{i + 1}/{args.number}] Fetching {url}")
+    for i in range(args.number):
         try:
-            download_face(url, args.output)
+            face_url = get_face_url()
+            vprint(args, f" => [{i + 1}/{args.number}] Fetching {face_url}")
+            download_face(face_url, args.output)
         except Exception as e:
-            print(f"Failed to download {url}: {e.message}")
+            print(f"Failed to download {face_url}: {e.message}")
             if args.ignore_error:
+                vprint(args, " => Continuing anyway")
                 continue
             else:
                 exit(1)
